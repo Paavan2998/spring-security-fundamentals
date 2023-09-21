@@ -3,6 +3,7 @@ package com.example.springsecurityfundamentals.config;
 import com.example.springsecurityfundamentals.config.security.filters.CustomAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -27,7 +28,8 @@ public class WebSecurityConfig {
         return httpSecurity.httpBasic(Customizer.withDefaults())
                 .addFilterBefore(customAuthenticationFilter, BasicAuthenticationFilter.class)
                 .authorizeRequests().anyRequest().authenticated()
-                .and().build();
+                .and().authenticationProvider(new DaoAuthenticationProvider(NoOpPasswordEncoder.getInstance()))
+                .build();
 
 //        .addFilterAt() it replaces the UsernamePasswordAuthenticationFilter with the customAuthentication filter
 //        .and().authenticationManager() can be used to create custom authentication manager, or we can create a bean of type AuthenticationManager like we did in this project.
