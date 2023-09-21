@@ -24,11 +24,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if(key.equals(headerKey)){
             return new CustomAuthentication(true, null);
         }
-        throw new BadCredentialsException("Oh No!");
+        throw new BadCredentialsException("Oh No! :( ");
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return true;
+        return CustomAuthentication.class.equals(authentication);
     }
 }
